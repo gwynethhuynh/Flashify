@@ -1,6 +1,7 @@
+/* Center the flashcard and move the button lower */
 .App {
-  text-align: center;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -8,42 +9,59 @@
 }
 
 .flashcard-container {
-  max-width: 400px;
-  width: 100%;
-}
+  perspective: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Horizontally center the flashcard */
+  align-items: center;
+  margin: 0 auto;
+  margin-bottom: 40px; /*Increase the margin to move the button lower */
+} 
 
 .flashcard {
-  background-color: #fff;
+  width: 400px;
+  height: 200px;
+  position: relative;
+  /*Child elements should be positioned in 3D space. Necessary for 3D transformations like rotation to work correctly.*/
+  transform-style: preserve-3d;
+  /*This transition creates a smooth animation when the flashcard is flipped.*/
+  transition: transform 0.5s;
+  /*changes the cursor to a hand pointer when hovering over the flashcard to indicate that it's clickable. */
+  cursor: pointer; 
+  
+}
+
+.flashcard.flipped {
+  transform: rotateY(180deg);
+}
+
+.front,
+.back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #e4e4e4;
   border-radius: 10px;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  text-align: center;
+  background-color: #fff;
+  /* padding: 20px; */
 }
 
-.flashcard-content h2 {
-  margin: 0;
+.back {
+  transform: rotateY(180deg);
 }
 
-.flashcard-content p {
-  font-size: 24px;
-  margin: 10px 0;
-}
-
-.flashcard-buttons {
-  margin-top: 20px;
-}
-
-.show-answer, .next-card {
+.next-card {
   background-color: #007BFF;
   color: #fff;
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
-  margin: 5px;
   cursor: pointer;
   font-size: 16px;
-}
-
-.show-answer:hover, .next-card:hover {
-  background-color: #0056b3;
+  margin-top: 20px;
 }

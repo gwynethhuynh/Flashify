@@ -9,33 +9,34 @@ function App() {
   ]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showAnswer, setShowAnswer] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
 
   const handleNextCard = () => {
     if (currentIndex < cards.length - 1) {
       setCurrentIndex(currentIndex + 1);
-      setShowAnswer(false);
+      setIsFlipped(false);
     }
   };
 
-  const handleShowAnswer = () => {
-    setShowAnswer(true);
+  const handleFlipCard = () => {
+    setIsFlipped(!isFlipped);
   };
 
   return (
     <div className="App">
       <div className="flashcard-container">
-        <div className="flashcard">
-          <div className="flashcard-content">
-            <h2>Flashcard</h2>
-            <p>{showAnswer ? cards[currentIndex].answer : cards[currentIndex].question}</p>
+        <div className={`flashcard ${isFlipped ? 'flipped' : ''}`} onClick={handleFlipCard}>
+          <div className="front">
+            <h2>Question</h2>
+            <p>{cards[currentIndex].question}</p>
           </div>
-          <div className="flashcard-buttons">
-            <button onClick={handleShowAnswer} className="show-answer">Show Answer</button>
-            <button onClick={handleNextCard} className="next-card">Next Card</button>
+          <div className="back">
+            <h2>Answer</h2>
+            <p>{cards[currentIndex].answer}</p>
           </div>
         </div>
       </div>
+      <button onClick={handleNextCard} className="next-card">Next Card</button>
     </div>
   );
 }
